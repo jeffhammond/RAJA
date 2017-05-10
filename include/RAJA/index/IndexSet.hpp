@@ -54,23 +54,22 @@
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
 #include "RAJA/config.hpp"
+
 #include "RAJA/internal/Iterators.hpp"
+#include "RAJA/index/IndexSetSegInfo.hpp"
 #include "RAJA/internal/RAJAVec.hpp"
 
 #include <iosfwd>
+#include <type_traits>
 
 namespace RAJA
 {
 
 template<typename A, typename B>
-struct EqualType {
-  static const bool value = false;
-};
+struct EqualType : std::false_type {};
 
 template<typename A>
-struct EqualType<A,A> {
-  static const bool value = true;
-};
+struct EqualType<A,A> : std::true_type {};
 
 enum PushEnd {
   PUSH_FRONT,

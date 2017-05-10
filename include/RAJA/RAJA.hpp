@@ -98,6 +98,9 @@
 //
 #include "RAJA/index/IndexValue.hpp"
 
+//
+// MultiPolicy -- runtime selection of policy on Segment constraints
+//
 #include "RAJA/policy/MultiPolicy.hpp"
 
 //

@@ -38,4 +38,3 @@ TEST(multipolicy, basic)
     ASSERT_TRUE(omp_get_num_threads() > 1);
   });
 }
-

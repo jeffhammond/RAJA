@@ -64,18 +64,15 @@
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
 #include "RAJA/util/types.hpp"
+#include "RAJA/util/defines.hpp"
 
 #include "RAJA/internal/fault_tolerance.hpp"
 
 #include "RAJA/policy/cuda/raja_cudaerrchk.hpp"
-
 #include "RAJA/policy/cuda/MemUtils_CUDA.hpp"
-
-#include "RAJA/util/defines.hpp"
+#include "RAJA/policy/cuda/policy.hpp"
 
 #include "RAJA/index/IndexSet.hpp"
-
-// #include "RAJA/policy/sequential/policy_sequential.hpp"
 
 namespace RAJA
 {
@@ -304,6 +301,7 @@ RAJA_INLINE void forall(ExecPolicy<seq_segit,
 {
   int num_seg = iset.getNumSegments();
   for (int isi = 0; isi < num_seg; ++isi) {
+
     iset.segmentCall(isi,
                      CallForall(),
                      cuda_exec_async<BLOCK_SIZE>(),
