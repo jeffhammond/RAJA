@@ -104,7 +104,7 @@ public:
   /// Destructor defined because some compilers don't appear to inline the
   /// one they generate.
   ///
-  ~RangeSegment() { ; }
+  ~RangeSegment() override { ; }
 
   ///
   /// Copy ctor defined because some compilers don't appear to inline the
@@ -162,13 +162,13 @@ public:
   ///
   /// Return number of indices represented by range.
   ///
-  Index_type getLength() const { return (m_end - m_begin); }
+  Index_type getLength() const override { return (m_end - m_begin); }
 
   ///
   /// Return 'Owned' indicating that segment object owns the data
   /// representing its indices.
   ///
-  IndexOwnership getIndexOwnership() const { return Owned; }
+  IndexOwnership getIndexOwnership() const override { return Owned; }
 
   ///
   /// Equality operator returns true if segments are equal; else false.
@@ -190,7 +190,7 @@ public:
   /// Equality operator returns true if segments are equal; else false.
   /// (Implements pure virtual method in BaseSegment class).
   ///
-  bool operator==(const BaseSegment& other) const
+  bool operator==(const BaseSegment& other) const override
   {
     const RangeSegment* o_ptr = dynamic_cast<const RangeSegment*>(&other);
     if (o_ptr) {
@@ -204,7 +204,7 @@ public:
   /// Inquality operator returns true if segments are not equal; else false.
   /// (Implements pure virtual method in BaseSegment class).
   ///
-  bool operator!=(const BaseSegment& other) const
+  bool operator!=(const BaseSegment& other) const override
   {
     return (!(*this == other));
   }
@@ -283,7 +283,7 @@ public:
   /// Destructor defined because some compilers don't appear to inline the
   /// one they generate.
   ///
-  ~RangeStrideSegment() { ; }
+  ~RangeStrideSegment() override { ; }
 
   ///
   /// Copy ctor defined because some compilers don't appear to inline the
@@ -355,7 +355,7 @@ public:
   ///
   /// Return number of indices represented by range.
   ///
-  Index_type getLength() const
+  Index_type getLength() const override
   {
     return (m_end - m_begin) >= m_stride
                ? (m_end - m_begin) % m_stride ? (m_end - m_begin) / m_stride + 1
@@ -367,7 +367,7 @@ public:
   /// Return 'Owned' indicating that segment object owns the data
   /// representing its indices.
   ///
-  IndexOwnership getIndexOwnership() const { return Owned; }
+  IndexOwnership getIndexOwnership() const override { return Owned; }
 
   ///
   /// Equality operator returns true if segments are equal; else false.
@@ -390,7 +390,7 @@ public:
   /// Equality operator returns true if segments are equal; else false.
   /// (Implements pure virtual method in BaseSegment class).
   ///
-  bool operator==(const BaseSegment& other) const
+  bool operator==(const BaseSegment& other) const override
   {
     const RangeStrideSegment* o_ptr =
         dynamic_cast<const RangeStrideSegment*>(&other);
@@ -405,7 +405,7 @@ public:
   /// Inquality operator returns true if segments are not equal; else false.
   /// (Implements pure virtual method in BaseSegment class).
   ///
-  bool operator!=(const BaseSegment& other) const
+  bool operator!=(const BaseSegment& other) const override
   {
     return (!(*this == other));
   }

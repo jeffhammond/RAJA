@@ -83,7 +83,7 @@ enum IndexOwnership { Unowned, Owned };
 ///
 /// Type use for all loop indexing in RAJA constructs.
 ///
-typedef int Index_type;
+using Index_type = int;
 
 ///
 /// Integer value for undefined indices and other integer values.
@@ -101,7 +101,7 @@ const int UndefinedValue = -9999999;
 
 #if defined(RAJA_USE_DOUBLE)
 ///
-typedef double Real_type;
+using Real_type = double;
 
 #elif defined(RAJA_USE_FLOAT)
 ///
@@ -140,11 +140,11 @@ typedef const Real_type* RAJA_RESTRICT
 #elif defined(RAJA_COMPILER_GNU)
 
 #elif defined(RAJA_COMPILER_CLANG)
-typedef Real_type aligned_real_type __attribute__((aligned(RAJA::DATA_ALIGN)));
+using aligned_real_type = Real_type __attribute__((aligned(RAJA::DATA_ALIGN)));
 
-typedef aligned_real_type* RAJA_RESTRICT TDRAReal_ptr;
+using TDRAReal_ptr = aligned_real_type *__restrict;
 
-typedef const aligned_real_type* RAJA_RESTRICT const_TDRAReal_ptr;
+using const_TDRAReal_ptr = const aligned_real_type *__restrict;
 
 #else
 
@@ -708,16 +708,16 @@ typedef Real_type* UnalignedReal_ptr;
 typedef const Real_type* const_UnalignedReal_ptr;
 
 #elif defined(RAJA_USE_RESTRICT_PTR)
-typedef Real_type* RAJA_RESTRICT Real_ptr;
-typedef const Real_type* RAJA_RESTRICT const_Real_ptr;
+using Real_ptr = Real_type *__restrict;
+using const_Real_ptr = const Real_type *__restrict;
 
 #if defined(RAJA_USE_COMPLEX)
 typedef Complex_type* RAJA_RESTRICT Complex_ptr;
 typedef const Complex_type* RAJA_RESTRICT const_Complex_ptr;
 #endif
 
-typedef Real_type* RAJA_RESTRICT UnalignedReal_ptr;
-typedef const Real_type* RAJA_RESTRICT const_UnalignedReal_ptr;
+using UnalignedReal_ptr = Real_type *__restrict;
+using const_UnalignedReal_ptr = const Real_type *__restrict;
 
 #elif defined(RAJA_USE_RESTRICT_ALIGNED_PTR)
 typedef TDRAReal_ptr Real_ptr;

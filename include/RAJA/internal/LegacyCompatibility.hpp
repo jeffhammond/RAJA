@@ -106,15 +106,15 @@ namespace VarOps
 // Forward
 template <class T>
 struct remove_reference {
-  typedef T type;
+  using type = T;
 };
 template <class T>
 struct remove_reference<T&> {
-  typedef T type;
+  using type = T;
 };
 template <class T>
 struct remove_reference<T&&> {
-  typedef T type;
+  using type = T;
 };
 template <class T>
 RAJA_HOST_DEVICE RAJA_INLINE constexpr T&& forward(

@@ -145,7 +145,7 @@ TEST(LayoutTest, 2D_IJ)
 
 TEST(LayoutTest, 2D_JI)
 {
-  typedef RAJA::OffsetLayout<2> my_layout;
+  using my_layout = RAJA::OffsetLayout<2>;
 
   /*
    * Construct a 2D layout:
@@ -173,7 +173,7 @@ TEST(LayoutTest, 2D_JI)
 
 TEST(LayoutTest, View)
 {
-  int* data = new int[10];
+  auto* data = new int[10];
 
   using layout = RAJA::OffsetLayout<>;
 

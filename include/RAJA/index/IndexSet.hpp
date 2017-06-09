@@ -83,8 +83,8 @@ public:
   ///
   template <typename SEG_ITER_POLICY_T, typename SEG_EXEC_POLICY_T>
   struct ExecPolicy {
-    typedef SEG_ITER_POLICY_T seg_it;
-    typedef SEG_EXEC_POLICY_T seg_exec;
+    using seg_it = SEG_ITER_POLICY_T;
+    using seg_exec = SEG_EXEC_POLICY_T;
   };
 
   using SegVecT = RAJAVec<IndexSetSegInfo>;
@@ -454,7 +454,7 @@ private:
 template <typename T>
 IndexSet* IndexSet::createView(const T& segIds) const
 {
-  IndexSet* retVal = new IndexSet();
+  auto* retVal = new IndexSet();
 
   size_t numSeg = m_segments.size();
   for (typename T::iterator it = segIds.begin(); it != segIds.end(); ++it) {

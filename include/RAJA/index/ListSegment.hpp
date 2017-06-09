@@ -146,7 +146,7 @@ public:
   ///
   /// Destroy segment including its contents.
   ///
-  ~ListSegment();
+  ~ListSegment() override;
 
   ///
   /// Swap function for copy-and-swap idiom.
@@ -161,7 +161,7 @@ public:
   ///
   ///  Return length of list segment (# indices).
   ///
-  Index_type getLength() const { return m_len; }
+  Index_type getLength() const override { return m_len; }
 
   using iterator = Index_type*;
 
@@ -184,7 +184,7 @@ public:
   /// Return enum value indicating whether segment object owns the data
   /// representing its indices.
   ///
-  IndexOwnership getIndexOwnership() const { return m_indx_own; }
+  IndexOwnership getIndexOwnership() const override { return m_indx_own; }
 
   ///
   /// Return true if given array of indices is same as indices described
@@ -212,7 +212,7 @@ public:
   /// Equality operator returns true if segments are equal; else false.
   /// (Implements pure virtual method in BaseSegment class).
   ///
-  bool operator==(const BaseSegment& other) const
+  bool operator==(const BaseSegment& other) const override
   {
     const ListSegment* o_ptr = dynamic_cast<const ListSegment*>(&other);
     if (o_ptr) {
@@ -226,7 +226,7 @@ public:
   /// Inequality operator returns true if segments are not equal; else false.
   /// (Implements pure virtual method in BaseSegment class).
   ///
-  bool operator!=(const BaseSegment& other) const
+  bool operator!=(const BaseSegment& other) const override
   {
     return (!(*this == other));
   }
@@ -264,7 +264,7 @@ private:
  */
 template <typename T>
 ListSegment::ListSegment(const T& indx)
-    : BaseSegment(_ListSeg_), m_indx(0), m_len(indx.size()), m_indx_own(Unowned)
+    : BaseSegment(_ListSeg_), m_indx(nullptr), m_len(indx.size()), m_indx_own(Unowned)
 {
   if (!indx.empty()) {
 #if defined(RAJA_ENABLE_CUDA)

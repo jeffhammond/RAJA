@@ -266,7 +266,7 @@ public:
 
   // This is not implemented... but should be by the derived type
   // this is done by the macro
-  static std::string getName(void);
+  static std::string getName();
 
 protected:
   Index_type value;

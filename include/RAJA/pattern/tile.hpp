@@ -86,13 +86,13 @@ struct ForallN_Tile_Tag {
 template <typename TILE_LIST, typename NEXT = Execute>
 struct Tile {
   // Identify this policy
-  typedef ForallN_Tile_Tag PolicyTag;
+  using PolicyTag = RAJA::ForallN_Tile_Tag;
 
   // A TileList<> that contains a list of Tile policies (tile_none, etc.)
-  typedef TILE_LIST TilePolicy;
+  using TilePolicy = TILE_LIST;
 
   // The next nested-loop execution policy
-  typedef NEXT NextPolicy;
+  using NextPolicy = NEXT;
 };
 
 /******************************************************************
@@ -176,7 +176,7 @@ struct ForallN_NextPolicyWrapper {
   RAJA_INLINE
   void operator()(ARGS const &... args) const
   {
-    typedef typename NextPolicy::PolicyTag NextPolicyTag;
+    using NextPolicyTag = typename NextPolicy::PolicyTag;
     forallN_policy<NextPolicy>(NextPolicyTag(), body, args...);
   }
 };
@@ -230,7 +230,7 @@ RAJA_INLINE void forallN_peel_tile(TileList<TilePolicies...>,
 template <typename POLICY, typename BODY, typename... PARGS>
 RAJA_INLINE void forallN_policy(ForallN_Tile_Tag, BODY body, PARGS... pargs)
 {
-  typedef typename POLICY::NextPolicy NextPolicy;
+  using NextPolicy = typename POLICY::NextPolicy;
 
   // Extract the list of tiling policies from the policy
   using TilePolicy = typename POLICY::TilePolicy;

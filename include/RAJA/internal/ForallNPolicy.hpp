@@ -64,8 +64,8 @@ namespace RAJA
 
 template <typename P, typename I>
 struct ForallN_PolicyPair : public I {
-  typedef P POLICY;
-  typedef I ISET;
+  using POLICY = P;
+  using ISET = I;
 
   RAJA_INLINE
   explicit constexpr ForallN_PolicyPair(ISET const &i) : ISET(i) {}
@@ -76,7 +76,7 @@ struct ForallN_Execute_Tag {
 };
 
 struct Execute {
-  typedef ForallN_Execute_Tag PolicyTag;
+  using PolicyTag = RAJA::ForallN_Execute_Tag;
 };
 
 

@@ -67,11 +67,11 @@ struct ForallN_Permute_Tag {
 };
 template <typename LOOP_ORDER, typename NEXT = Execute>
 struct Permute {
-  typedef ForallN_Permute_Tag PolicyTag;
+  using PolicyTag = RAJA::ForallN_Permute_Tag;
 
-  typedef LOOP_ORDER LoopOrder;
+  using LoopOrder = LOOP_ORDER;
 
-  typedef NEXT NextPolicy;
+  using NextPolicy = NEXT;
 };
 
 /******************************************************************
@@ -120,11 +120,11 @@ template <typename POLICY, typename BODY, typename... ARGS>
 RAJA_INLINE void forallN_policy(ForallN_Permute_Tag, BODY body, ARGS... args)
 {
   // Get the loop permutation
-  typedef typename POLICY::LoopOrder LoopOrder;
+  using LoopOrder = typename POLICY::LoopOrder;
 
   // Get next policy
-  typedef typename POLICY::NextPolicy NextPolicy;
-  typedef typename POLICY::NextPolicy::PolicyTag NextPolicyTag;
+  using NextPolicy = typename POLICY::NextPolicy;
+  using NextPolicyTag = typename POLICY::NextPolicy::PolicyTag;
 
   // Create wrapper functor that permutes indices and policies
   typedef ForallN_Permute_Functor<LoopOrder, BODY> PERM_FUNC;

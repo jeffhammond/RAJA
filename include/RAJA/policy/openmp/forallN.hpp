@@ -64,6 +64,8 @@
 
 #include <omp.h>
 
+#include <utility>
+
 namespace RAJA
 {
 
@@ -76,10 +78,10 @@ struct ForallN_OMP_Parallel_Tag {
 template <typename NEXT = Execute>
 struct OMP_Parallel {
   // Identify this policy
-  typedef ForallN_OMP_Parallel_Tag PolicyTag;
+  using PolicyTag = RAJA::ForallN_OMP_Parallel_Tag;
 
   // The next nested-loop execution policy
-  typedef NEXT NextPolicy;
+  using NextPolicy = NEXT;
 };
 
 
@@ -96,7 +98,7 @@ struct ForallN_Executor<ForallN_PolicyPair<omp_collapse_nowait_exec,
   ForallN_PolicyPair<omp_collapse_nowait_exec, RangeSegment> iset_i;
   ForallN_PolicyPair<omp_collapse_nowait_exec, RangeSegment> iset_j;
 
-  typedef ForallN_Executor<PREST...> NextExec;
+  using NextExec = ForallN_Executor<PREST...>;
   NextExec next_exec;
 
   RAJA_INLINE
@@ -104,7 +106,7 @@ struct ForallN_Executor<ForallN_PolicyPair<omp_collapse_nowait_exec,
       ForallN_PolicyPair<omp_collapse_nowait_exec, RangeSegment> const &iseti_,
       ForallN_PolicyPair<omp_collapse_nowait_exec, RangeSegment> const &isetj_,
       PREST const &... prest)
-      : iset_i(iseti_), iset_j(isetj_), next_exec(prest...)
+      : iset_i(std::move(iseti_)), iset_j(std::move(isetj_)), next_exec(prest...)
   {
   }
 
@@ -143,7 +145,7 @@ struct ForallN_Executor<ForallN_PolicyPair<omp_collapse_nowait_exec,
   ForallN_PolicyPair<omp_collapse_nowait_exec, RangeSegment> iset_j;
   ForallN_PolicyPair<omp_collapse_nowait_exec, RangeSegment> iset_k;
 
-  typedef ForallN_Executor<PREST...> NextExec;
+  using NextExec = ForallN_Executor<PREST...>;
   NextExec next_exec;
 
   RAJA_INLINE
@@ -152,7 +154,7 @@ struct ForallN_Executor<ForallN_PolicyPair<omp_collapse_nowait_exec,
       ForallN_PolicyPair<omp_collapse_nowait_exec, RangeSegment> const &isetj_,
       ForallN_PolicyPair<omp_collapse_nowait_exec, RangeSegment> const &isetk_,
       PREST... prest)
-      : iset_i(iseti_), iset_j(isetj_), iset_k(isetk_), next_exec(prest...)
+      : iset_i(std::move(iseti_)), iset_j(std::move(isetj_)), iset_k(std::move(isetk_)), next_exec(prest...)
   {
   }
 
@@ -195,17 +197,15 @@ struct ForallN_Executor<ForallN_PolicyPair<omp_collapse_nowait_exec,
   ForallN_PolicyPair<omp_collapse_nowait_exec, RangeStrideSegment> iset_i;
   ForallN_PolicyPair<omp_collapse_nowait_exec, RangeStrideSegment> iset_j;
 
-  typedef ForallN_Executor<PREST...> NextExec;
+  using NextExec = ForallN_Executor<PREST...>;
   NextExec next_exec;
 
   RAJA_INLINE
   constexpr ForallN_Executor(
-      ForallN_PolicyPair<omp_collapse_nowait_exec, RangeStrideSegment> const
-          &iseti_,
-      ForallN_PolicyPair<omp_collapse_nowait_exec, RangeStrideSegment> const
-          &isetj_,
+      ForallN_PolicyPair<omp_collapse_nowait_exec, RangeStrideSegment> const &iseti_,
+      ForallN_PolicyPair<omp_collapse_nowait_exec, RangeStrideSegment> const &isetj_,
       PREST const &... prest)
-      : iset_i(iseti_), iset_j(isetj_), next_exec(prest...)
+      : iset_i(std::move(iseti_)), iset_j(std::move(isetj_)), next_exec(prest...)
   {
   }
 
@@ -247,19 +247,16 @@ struct ForallN_Executor<ForallN_PolicyPair<omp_collapse_nowait_exec,
   ForallN_PolicyPair<omp_collapse_nowait_exec, RangeStrideSegment> iset_j;
   ForallN_PolicyPair<omp_collapse_nowait_exec, RangeStrideSegment> iset_k;
 
-  typedef ForallN_Executor<PREST...> NextExec;
+  using NextExec = ForallN_Executor<PREST...>;
   NextExec next_exec;
 
   RAJA_INLINE
   constexpr ForallN_Executor(
-      ForallN_PolicyPair<omp_collapse_nowait_exec, RangeStrideSegment> const
-          &iseti_,
-      ForallN_PolicyPair<omp_collapse_nowait_exec, RangeStrideSegment> const
-          &isetj_,
-      ForallN_PolicyPair<omp_collapse_nowait_exec, RangeStrideSegment> const
-          &isetk_,
+      ForallN_PolicyPair<omp_collapse_nowait_exec, RangeStrideSegment> const &iseti_,
+      ForallN_PolicyPair<omp_collapse_nowait_exec, RangeStrideSegment> const &isetj_,
+      ForallN_PolicyPair<omp_collapse_nowait_exec, RangeStrideSegment> const &isetk_,
       PREST... prest)
-      : iset_i(iseti_), iset_j(isetj_), iset_k(isetk_), next_exec(prest...)
+      : iset_i(std::move(iseti_)), iset_j(std::move(isetj_)), iset_k(std::move(isetk_)), next_exec(prest...)
   {
   }
 
@@ -305,8 +302,8 @@ RAJA_INLINE void forallN_policy(ForallN_OMP_Parallel_Tag,
                                 BODY body,
                                 PARGS... pargs)
 {
-  typedef typename POLICY::NextPolicy NextPolicy;
-  typedef typename POLICY::NextPolicy::PolicyTag NextPolicyTag;
+  using NextPolicy = typename POLICY::NextPolicy;
+  using NextPolicyTag = typename POLICY::NextPolicy::PolicyTag;
 
 #pragma omp parallel firstprivate(body)
   {

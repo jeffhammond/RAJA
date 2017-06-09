@@ -70,8 +70,8 @@ struct LayoutBase_impl {
 template <size_t... RangeInts, typename IdxLin>
 struct LayoutBase_impl<VarOps::index_sequence<RangeInts...>, IdxLin> {
 public:
-  typedef IdxLin IndexLinear;
-  typedef VarOps::make_index_sequence<sizeof...(RangeInts)> IndexRange;
+  using IndexLinear = IdxLin;
+  using IndexRange = VarOps::make_index_sequence<sizeof...(RangeInts)>;
 
   static constexpr size_t n_dims = sizeof...(RangeInts);
   static constexpr size_t limit = RAJA::operators::limits<IdxLin>::max();

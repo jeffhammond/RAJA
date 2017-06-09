@@ -55,7 +55,7 @@
 
 #include "RAJA/config.hpp"
 
-#include <stdlib.h>
+#include <cstdlib>
 #include <stdexcept>
 
 //
@@ -148,7 +148,7 @@
 
 inline void RAJA_ABORT_OR_THROW(const char *str)
 {
-  if (getenv("RAJA_NO_EXCEPT") != NULL) {
+  if (getenv("RAJA_NO_EXCEPT") != nullptr) {
     abort();
   } else {
     throw std::runtime_error(str);

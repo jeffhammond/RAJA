@@ -214,7 +214,7 @@ private:
     }
 
     if (m_capacity < target_cap) {
-      T* tdata = new T[target_cap];
+      auto* tdata = new T[target_cap];
 
       if (m_data) {
         for (size_t i = 0; (i < m_size) && (i < target_cap); ++i) {

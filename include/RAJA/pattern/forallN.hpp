@@ -72,8 +72,8 @@ namespace RAJA
  */
 template <typename EXEC, typename NEXT = Execute>
 struct NestedPolicy {
-  typedef NEXT NextPolicy;
-  typedef EXEC ExecPolicies;
+  using NextPolicy = NEXT;
+  using ExecPolicies = EXEC;
 };
 
 /*!
@@ -86,7 +86,7 @@ struct NestedPolicy {
 template <typename... PLIST>
 struct ExecList {
   constexpr const static size_t num_loops = sizeof...(PLIST);
-  typedef std::tuple<PLIST...> tuple;
+  using tuple = std::tuple<PLIST...>;
 };
 
 
@@ -101,10 +101,10 @@ struct ExecList {
  */
 template <typename POLICY_INIT, typename... POLICY_REST>
 struct ForallN_Executor<POLICY_INIT, POLICY_REST...> {
-  typedef typename POLICY_INIT::ISET TYPE_I;
-  typedef typename POLICY_INIT::POLICY POLICY_I;
+  using TYPE_I = typename POLICY_INIT::ISET;
+  using POLICY_I = typename POLICY_INIT::POLICY;
 
-  typedef ForallN_Executor<POLICY_REST...> NextExec;
+  using NextExec = ForallN_Executor<POLICY_REST...>;
 
   POLICY_INIT const is_i;
   NextExec const next_exec;
@@ -129,7 +129,7 @@ struct ForallN_Executor<POLICY_INIT, POLICY_REST...> {
  */
 template <>
 struct ForallN_Executor<> {
-  constexpr ForallN_Executor() {}
+  constexpr ForallN_Executor() = default;
 
   template <typename BODY>
   RAJA_INLINE void operator()(BODY const &body) const
@@ -203,8 +203,8 @@ RAJA_INLINE void forallN_impl_extract(RAJA::ExecList<ExecPolicies...>,
                 "The number of execution policies and arguments does not "
                 "match");
   // extract next policy
-  typedef typename POLICY::NextPolicy NextPolicy;
-  typedef typename POLICY::NextPolicy::PolicyTag NextPolicyTag;
+  using NextPolicy = typename POLICY::NextPolicy;
+  using NextPolicyTag = typename POLICY::NextPolicy::PolicyTag;
 
   // Create index type conversion layer
   typedef ForallN_IndexTypeConverter<BODY, Indices...> IDX_CONV;

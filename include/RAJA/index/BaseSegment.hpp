@@ -72,7 +72,7 @@ public:
   ///
   /// Ctor for base segment type.
   ///
-  explicit BaseSegment(SegmentType type) : m_type(type), m_private(0) { ; }
+  explicit BaseSegment(SegmentType type) : m_type(type), m_private(nullptr) { ; }
 
   /*
    * Using compiler-generated copy ctor, copy assignment.

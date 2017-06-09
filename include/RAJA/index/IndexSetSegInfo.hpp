@@ -89,10 +89,10 @@ public:
   /// Default ctor.
   ///
   IndexSetSegInfo()
-      : m_segment(0),
+      : m_segment(nullptr),
         m_owns_segment(false),
         m_icount(UndefinedValue),
-        m_dep_graph_node(0)
+        m_dep_graph_node(nullptr)
   {
     ;
   }
@@ -104,7 +104,7 @@ public:
       : m_segment(segment),
         m_owns_segment(owns_segment),
         m_icount(UndefinedValue),
-        m_dep_graph_node(0)
+        m_dep_graph_node(nullptr)
   {
     ;
   }
