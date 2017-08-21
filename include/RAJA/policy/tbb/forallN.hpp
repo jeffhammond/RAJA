@@ -93,9 +93,24 @@ struct TBB_Parallel {
 };
 
 /******************************************************************
- *  ForallN collapse nowait execution templates
+ *  ForallN collapse execution templates
  ******************************************************************/
 
+/**
+ * @brief TBB dynamic doubly-nested for implementation
+ *
+ * @param p tbb tag
+ * @param Iterable1 any iterable
+ * @param Iterable2 any iterable
+ * @param PREST loop body
+ *
+ * @return None
+ *
+ * This forall implements a TBB parallel_for loop over the specified iterables
+ * using the dynamic loop scheduler and the grain sizes specified in the policy
+ * argument.  This should be used for composable parallelism and increased work
+ * stealing at the cost of initial start-up overhead for a top-level loop.
+ */
 template <typename Iterable1,
           typename Iterable2,
           std::size_t Grain1,
@@ -144,6 +159,22 @@ struct ForallN_Executor<false,
   }
 };
 
+/**
+ * @brief TBB dynamic triply-nested for implementation
+ *
+ * @param p tbb tag
+ * @param Iterable1 any iterable
+ * @param Iterable2 any iterable
+ * @param Iterable3 any iterable
+ * @param PREST loop body
+ *
+ * @return None
+ *
+ * This forall implements a TBB parallel_for loop over the specified iterables
+ * using the dynamic loop scheduler and the grain sizes specified in the policy
+ * argument.  This should be used for composable parallelism and increased work
+ * stealing at the cost of initial start-up overhead for a top-level loop.
+ */
 template <typename Iterable1,
           typename Iterable2,
           typename Iterable3,
