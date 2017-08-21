@@ -152,7 +152,7 @@ forall_Icount(const tbb_for_dynamic& p,
  * compile-time constant in the policy argument.  This should be used for
  * OpenMP-like fast-launch well-balanced loops, or loops where the split between
  * threads must be maintained across multiple loops for correctness. NOTE: if
- * correctnes requires the per-thread mapping, you *must* use TBB 2017 or newer
+ * correctnes requires the per-thread mapping, you *must* use TBB 2017 or newer.
  */
 template <typename Iterable, typename Func, size_t ChunkSize>
 RAJA_INLINE void forall(const tbb_for_static<ChunkSize>&,
