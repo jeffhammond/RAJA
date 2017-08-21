@@ -68,7 +68,7 @@ namespace RAJA
 {
 
 /******************************************************************
- *  ForallN CUDA policies
+ *  ForallN OpenMP policies
  ******************************************************************/
 
 namespace detail
