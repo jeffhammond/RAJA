@@ -64,6 +64,10 @@
 #include "RAJA/policy/tbb.hpp"
 #endif
 
+#if defined(RAJA_ENABLE_SYCL)
+#include "RAJA/policy/sycl.hpp"
+#endif
+
 #if defined(RAJA_ENABLE_CUDA)
 #include "RAJA/policy/cuda.hpp"
 #endif
