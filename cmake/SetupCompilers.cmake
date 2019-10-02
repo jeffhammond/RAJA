@@ -68,6 +68,12 @@ if ( MSVC )
   endif()
 endif()
 
+if (ENABLE_SYCL)
+  set(CMAKE_SYCL_STANDARD 14)
+  set(CMAKE_SYCL_FLAGS "${CMAKE_SYCL_FLAGS} -fsycl -fsycl-unnamed-lambda")
+endif()
+# end RAJA_ENABLE_SYCL section
+
 if (ENABLE_CUDA)
   set(CMAKE_CUDA_STANDARD 11)
   set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} -restrict -arch ${CUDA_ARCH} --expt-extended-lambda --expt-relaxed-constexpr")

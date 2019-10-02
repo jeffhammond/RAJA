@@ -16,17 +16,18 @@ if (ENABLE_OPENMP)
 endif()
 
 if (ENABLE_SYCL)
-  find_package(SYCL)
-  if(SYCL_FOUND)
-    blt_register_library(
-      NAME sycl
-      INCLUDES ${SYCL_INCLUDE_DIRS}
-      LIBRARIES ${SYCL_LIBRARIES})
-    message(STATUS "SYCL Enabled")
-  else()
-    message(WARNING "SYCL NOT FOUND")
-    set(ENABLE_SYCL Off)
-  endif()
+   message(STATUS "SYCL Enabled")
+#  find_package(SYCL)
+#  if(SYCL_FOUND)
+#    blt_register_library(
+#      NAME sycl
+#      INCLUDES ${SYCL_INCLUDE_DIRS}
+#      LIBRARIES ${SYCL_LIBRARIES})
+#    message(STATUS "SYCL Enabled")
+#  else()
+#    message(WARNING "SYCL NOT FOUND")
+#    set(ENABLE_SYCL Off)
+#  endif()
 endif ()
 
 if (ENABLE_TBB)
