@@ -20,11 +20,14 @@
 
 #include "RAJA/config.hpp"
 
+#if defined(RAJA_ENABLE_SYCL)
+
+#include "CL/sycl.hpp"
+namespace sycl = cl::sycl;
+
 #include <algorithm>
 #include <functional>
 #include <iterator>
-
-#include <sycl/sycl.h>
 
 #include "RAJA/util/concepts.hpp"
 #include "RAJA/util/macros.hpp"
@@ -198,4 +201,6 @@ concepts::enable_if<type_traits::is_sycl_policy<ExecPolicy>> exclusive(
 
 }  // namespace RAJA
 
-#endif
+#endif  // closing endif for RAJA_ENABLE_SYCL guard
+
+#endif  // closing endif for header file include guard

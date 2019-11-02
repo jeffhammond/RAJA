@@ -25,10 +25,11 @@
 
 #if defined(RAJA_ENABLE_SYCL)
 
+#include "CL/sycl.hpp"
+namespace sycl = cl::sycl;
+
 #include <memory>
 #include <tuple>
-
-#include <sycl/sycl.h>
 
 #include "RAJA/internal/MemUtils_CPU.hpp"
 

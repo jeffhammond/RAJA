@@ -26,6 +26,7 @@
 #if defined(RAJA_ENABLE_SYCL)
 
 #include "CL/sycl.hpp"
+namespace sycl = cl::sycl;
 
 #include "RAJA/util/types.hpp"
 
@@ -65,12 +66,14 @@ namespace sycl
  * stealing at the cost of initial start-up overhead for a top-level loop.
  */
 template <typename Iterable, typename Func>
-RAJA_INLINE void forall_impl(const sycl_for_dynamic& p,
+RAJA_INLINE void forall_impl(const sycl_for_dynamic&,
                              Iterable&& iter,
                              Func&& loop_body)
 {
   using std::begin;
   using std::end;
+
+#if 0
   using brange = ::sycl::blocked_range<decltype(iter.begin())>;
   ::sycl::parallel_for(brange(begin(iter), end(iter), p.grain_size),
                       [=](const brange& r) {
@@ -80,6 +83,26 @@ RAJA_INLINE void forall_impl(const sycl_for_dynamic& p,
                         for (const auto& i : r)
                           body(i);
                       });
+#endif
+
+  auto b = begin(iter);
+  auto e = end(iter);
+
+  ::sycl::queue q(::sycl::default_selector{});
+
+  using RAJA::internal::thread_privatize;
+  auto privatizer = thread_privatize(loop_body);
+  auto& body = privatizer.get_priv();
+
+  q.submit([&](::sycl::handler& h) {
+    h.parallel_for( ::sycl::range<1>{e},
+                    ::sycl::id<1>{b},
+                    [=] (::sycl::id<1> it) {
+      const size_t i = it[0];
+      body(i);
+    });
+  });
+  q.wait();
 }
 
 ///
@@ -109,6 +132,8 @@ RAJA_INLINE void forall_impl(const sycl_for_static<ChunkSize>&,
 {
   using std::begin;
   using std::end;
+
+#if 0
   using brange = ::sycl::blocked_range<decltype(iter.begin())>;
   ::sycl::parallel_for(brange(begin(iter), end(iter), ChunkSize),
                       [=](const brange& r) {
@@ -119,6 +144,26 @@ RAJA_INLINE void forall_impl(const sycl_for_static<ChunkSize>&,
                           body(i);
                       },
                       sycl_static_partitioner{});
+#endif
+
+  auto b = begin(iter);
+  auto e = end(iter);
+
+  ::sycl::queue q(::sycl::default_selector{});
+
+  using RAJA::internal::thread_privatize;
+  auto privatizer = thread_privatize(loop_body);
+  auto& body = privatizer.get_priv();
+
+  q.submit([&](::sycl::handler& h) {
+    h.parallel_for( ::sycl::range<1>{e},
+                    ::sycl::id<1>{b},
+                    [=] (::sycl::id<1> it) {
+      const size_t i = it[0];
+      body(i);
+    });
+  });
+  q.wait();
 }
 
 }  // namespace sycl
